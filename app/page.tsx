@@ -47,7 +47,7 @@ export default function DropDrawerPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-medium mb-4 mt-96">Installation</h2>
+            <h2 className="text-xl font-medium mb-4">Installation</h2>
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-medium mb-2">
