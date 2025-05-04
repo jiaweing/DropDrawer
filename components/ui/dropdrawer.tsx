@@ -639,7 +639,6 @@ function DropDrawerSubTrigger({
   className,
   inset,
   children,
-  icon, // Kept for backward compatibility but not used
   ...props
 }: DropDrawerProps & { inset?: boolean; icon?: React.ReactNode }) {
   const { isMobile } = useDropDrawerContext();

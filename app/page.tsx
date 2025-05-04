@@ -10,7 +10,7 @@ export default function DropDrawerPage() {
     <div className="min-h-screen flex flex-col max-w-3xl mx-auto px-8 py-16 md:py-24">
       <header className="flex justify-between items-center mb-16">
         <a
-          href="https://github.com/jiaweing/dropdrawer"
+          href="https://github.com/jiaweing/DropDrawer"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-muted-foreground hover:underline flex items-center gap-1"
