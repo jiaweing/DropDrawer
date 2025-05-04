@@ -5,7 +5,12 @@ import {
   BookmarkIcon,
   Copy,
   EyeOffIcon,
+  Home,
+  LayoutDashboard,
+  LockIcon,
   MoreVertical,
+  Settings,
+  ShieldIcon,
   UserMinusIcon,
   UserXIcon,
 } from "lucide-react";
@@ -60,11 +65,23 @@ export function PostExample() {
               {/* First group: Add to feed, Save, Not interested */}
               <DropDrawerGroup>
                 <DropDrawerSub id="add-to-feed">
-                  <DropDrawerSubTrigger>Add to feed</DropDrawerSubTrigger>
+                  <DropDrawerSubTrigger
+                    icon={<LayoutDashboard className="h-5 w-5" />}
+                  >
+                    Add to feed
+                  </DropDrawerSubTrigger>
                   <DropDrawerSubContent>
-                    <DropDrawerItem>Home feed</DropDrawerItem>
-                    <DropDrawerItem>Work feed</DropDrawerItem>
-                    <DropDrawerItem>Personal feed</DropDrawerItem>
+                    <DropDrawerItem icon={<Home className="h-5 w-5" />}>
+                      Home
+                    </DropDrawerItem>
+                    <DropDrawerItem
+                      icon={<LayoutDashboard className="h-5 w-5" />}
+                    >
+                      Work
+                    </DropDrawerItem>
+                    <DropDrawerItem icon={<BookmarkIcon className="h-5 w-5" />}>
+                      Personal
+                    </DropDrawerItem>
                   </DropDrawerSubContent>
                 </DropDrawerSub>
                 <DropDrawerItem icon={<BookmarkIcon className="h-5 w-5" />}>
@@ -86,18 +103,36 @@ export function PostExample() {
                   Unfollow
                 </DropDrawerItem>
                 <DropDrawerSub id="advanced-options">
-                  <DropDrawerSubTrigger>Advanced options</DropDrawerSubTrigger>
+                  <DropDrawerSubTrigger icon={<Settings className="h-5 w-5" />}>
+                    Advanced options
+                  </DropDrawerSubTrigger>
                   <DropDrawerSubContent>
-                    <DropDrawerItem>Hide this post</DropDrawerItem>
-                    <DropDrawerItem>Block content</DropDrawerItem>
+                    <DropDrawerGroup>
+                      <DropDrawerItem icon={<EyeOffIcon className="h-5 w-5" />}>
+                        Hide this post
+                      </DropDrawerItem>
+                      <DropDrawerItem
+                        icon={<AlertTriangle className="h-5 w-5" />}
+                      >
+                        Block content
+                      </DropDrawerItem>
+                    </DropDrawerGroup>
                     <DropDrawerSeparator />
                     <DropDrawerSub id="nested-submenu">
-                      <DropDrawerSubTrigger>
+                      <DropDrawerSubTrigger
+                        icon={<ShieldIcon className="h-5 w-5" />}
+                      >
                         Privacy options
                       </DropDrawerSubTrigger>
                       <DropDrawerSubContent>
-                        <DropDrawerItem>Restrict sharing</DropDrawerItem>
-                        <DropDrawerItem>Manage visibility</DropDrawerItem>
+                        <DropDrawerItem icon={<LockIcon className="h-5 w-5" />}>
+                          Restrict sharing
+                        </DropDrawerItem>
+                        <DropDrawerItem
+                          icon={<EyeOffIcon className="h-5 w-5" />}
+                        >
+                          Manage visibility
+                        </DropDrawerItem>
                       </DropDrawerSubContent>
                     </DropDrawerSub>
                   </DropDrawerSubContent>

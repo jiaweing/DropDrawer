@@ -160,7 +160,7 @@ function DropDrawerContent({ className, children, ...props }: DropDrawerProps) {
         >
           {activeSubmenu ? (
             <>
-              <DrawerHeader className="border-b">
+              <DrawerHeader>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={goBack}
@@ -173,7 +173,7 @@ function DropDrawerContent({ className, children, ...props }: DropDrawerProps) {
               </DrawerHeader>
               <div className="flex-1 overflow-y-auto">
                 {/* Find and render the active submenu content */}
-                <div className="py-3 pb-4">
+                <div className="py-4 pb-6 space-y-1.5">
                   {(() => {
                     // Function to extract submenu content
                     const extractSubmenuContent = (
@@ -249,7 +249,7 @@ function DropDrawerContent({ className, children, ...props }: DropDrawerProps) {
                     );
 
                     if (submenuContent.length === 0) {
-                      return <div>No submenu content found</div>;
+                      return <></>;
                     }
 
                     return submenuContent;
@@ -262,7 +262,7 @@ function DropDrawerContent({ className, children, ...props }: DropDrawerProps) {
               <DrawerHeader className="sr-only">
                 <DrawerTitle>Menu</DrawerTitle>
               </DrawerHeader>
-              <div className="py-3 pb-4">{children}</div>
+              <div className="py-4 pb-6 space-y-1.5">{children}</div>
             </>
           )}
         </DrawerContent>
@@ -356,11 +356,11 @@ function DropDrawerItem({
         data-inset={inset}
         data-disabled={disabled}
         className={cn(
-          "flex cursor-pointer items-center justify-between px-4 py-3",
+          "flex cursor-pointer items-center justify-between px-4 py-4",
           // Only apply margin, background and rounded corners if not in a group
-          !isInsideGroup && "bg-accent dark:bg-accent mx-2 my-0.5 rounded-md",
-          // For items in a group, don't add background
-          isInsideGroup && "bg-transparent",
+          !isInsideGroup && "bg-accent dark:bg-accent mx-2 my-1.5 rounded-md",
+          // For items in a group, don't add background but add more padding
+          isInsideGroup && "bg-transparent py-4",
           inset && "pl-8",
           variant === "destructive" && "text-destructive dark:text-destructive",
           disabled && "pointer-events-none opacity-50",
@@ -639,8 +639,9 @@ function DropDrawerSubTrigger({
   className,
   inset,
   children,
+  icon, // Kept for backward compatibility but not used
   ...props
-}: DropDrawerProps & { inset?: boolean }) {
+}: DropDrawerProps & { inset?: boolean; icon?: React.ReactNode }) {
   const { isMobile } = useDropDrawerContext();
   const { navigateToSubmenu } = React.useContext(SubmenuContext);
 
@@ -746,11 +747,11 @@ function DropDrawerSubTrigger({
         data-slot="drop-drawer-sub-trigger"
         data-inset={inset}
         className={cn(
-          "flex cursor-pointer items-center justify-between px-4 py-3",
+          "flex cursor-pointer items-center justify-between px-4 py-4",
           // Only apply margin, background and rounded corners if not in a group
-          !isInsideGroup && "bg-accent dark:bg-accent mx-2 my-0.5 rounded-md",
-          // For items in a group, don't add background
-          isInsideGroup && "bg-transparent",
+          !isInsideGroup && "bg-accent dark:bg-accent mx-2 my-1.5 rounded-md",
+          // For items in a group, don't add background but add more padding
+          isInsideGroup && "bg-transparent py-4",
           inset && "pl-8",
           className
         )}

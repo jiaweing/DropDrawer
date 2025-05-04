@@ -20,13 +20,16 @@ Traditional dropdown menus don't feel native on mobile devices - they can be dif
 
 ### Desktop View
 
-![Desktop dropdown view](docs/desktop.png)
+| Light Mode                                 | Dark Mode                                            |
+| ------------------------------------------ | ---------------------------------------------------- |
+| ![Desktop dropdown view](docs/desktop.png) | ![Desktop dropdown view dark](docs/desktop-dark.png) |
 
 ### Mobile Views
 
-| Main Drawer                            | Submenu Navigation                                 |
-| -------------------------------------- | -------------------------------------------------- |
-| ![Mobile drawer view](docs/mobile.png) | ![Mobile drawer with submenu](docs/mobile-sub.png) |
+| Main Drawer                                      | Submenu Navigation                                           |
+| ------------------------------------------------ | ------------------------------------------------------------ |
+| ![Mobile drawer view](docs/mobile.png)           | ![Mobile drawer with submenu](docs/mobile-sub.png)           |
+| ![Mobile drawer view dark](docs/mobile-dark.png) | ![Mobile drawer with submenu dark](docs/mobile-sub-dark.png) |
 
 ## Installation
 

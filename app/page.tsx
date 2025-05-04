@@ -1,6 +1,8 @@
 "use client";
 
 import { ModeToggle } from "@/components/mode-toggle";
+import { Code } from "@/components/ui/code";
+import { CodeBlock } from "@/components/ui/code-block";
 import { PostExample } from "../examples/post-example";
 
 export default function DropDrawerPage() {
@@ -45,7 +47,7 @@ export default function DropDrawerPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-medium mb-4">Installation</h2>
+            <h2 className="text-xl font-medium mb-4 mt-96">Installation</h2>
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-medium mb-2">
@@ -55,21 +57,14 @@ export default function DropDrawerPage() {
                   The easiest way to install DropDrawer is through the shadcn
                   registry:
                 </p>
-                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
-                  <code>
-                    pnpm dlx shadcn@latest add
-                    https://dropdrawer.jiawei.dev/r/dropdrawer.json
-                  </code>
-                </pre>
-                <p className="text-sm text-muted-foreground mt-2">
-                  You can also use npm:
-                </p>
-                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
-                  <code>
-                    npx shadcn@latest add
-                    https://dropdrawer.jiawei.dev/r/dropdrawer.json
-                  </code>
-                </pre>
+                <Code
+                  code={{
+                    pnpm: "pnpm dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json",
+                    npm: "npx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json",
+                    yarn: "yarn dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json",
+                    bun: "bunx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json",
+                  }}
+                />
               </div>
 
               <div>
@@ -80,9 +75,14 @@ export default function DropDrawerPage() {
                   1. Copy the dropdown-menu and drawer components from
                   shadcn/ui:
                 </p>
-                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
-                  <code>npx shadcn@latest add dropdown-menu drawer</code>
-                </pre>
+                <Code
+                  code={{
+                    pnpm: "pnpm dlx shadcn@latest add dropdown-menu drawer",
+                    npm: "npx shadcn@latest add dropdown-menu drawer",
+                    yarn: "yarn dlx shadcn@latest add dropdown-menu drawer",
+                    bun: "bunx shadcn@latest add dropdown-menu drawer",
+                  }}
+                />
                 <p className="text-sm text-muted-foreground mt-2">
                   For detailed manual installation steps, please refer to the{" "}
                   <a
@@ -110,14 +110,17 @@ export default function DropDrawerPage() {
                   imports:
                 </p>
                 <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
-                  <code>{`import { DropDrawer, DropDrawerContent, DropDrawerItem, DropDrawerTrigger } from "@/components/ui/dropdrawer";`}</code>
+                  <CodeBlock
+                    code={`import { DropDrawer, DropDrawerContent, DropDrawerItem, DropDrawerTrigger } from "@/components/ui/dropdrawer";`}
+                    language="tsx"
+                  />
                 </pre>
               </div>
 
               <div>
                 <h3 className="text-lg font-medium mb-2">Basic Example</h3>
-                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
-                  <code>{`import {
+                <CodeBlock
+                  code={`import {
   DropDrawer,
   DropDrawerContent,
   DropDrawerItem,
@@ -138,8 +141,9 @@ export function Example() {
       </DropDrawerContent>
     </DropDrawer>
   );
-}`}</code>
-                </pre>
+}`}
+                  language="tsx"
+                />
               </div>
             </div>
           </section>
