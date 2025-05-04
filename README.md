@@ -3,7 +3,9 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/your-username/dropdrawer)
 
-A responsive component that automatically switches between a dropdown menu on desktop and a drawer on mobile devices for shadcn/ui. It's designed as a drop-in replacement for shadcn/ui's DropdownMenu component.
+A responsive component that automatically switches between a dropdown menu on desktop and a drawer on mobile devices for shadcn/ui.
+
+A drop-in replacement for shadcn/ui's DropdownMenu component.
 
 ## Why DropDrawer?
 
@@ -33,19 +35,19 @@ Traditional dropdown menus don't feel native on mobile devices - they can be dif
 The easiest way to install DropDrawer is through the shadcn registry:
 
 ```bash
-pnpm dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/drop-drawer.json
+pnpm dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
 ```
 
 You can also use npm:
 
 ```bash
-npx shadcn@latest add https://dropdrawer.jiawei.dev/r/drop-drawer.json
+npx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
 ```
 
 During local development, you can use:
 
 ```bash
-npx shadcn@latest add http://localhost:3000/r/drop-drawer.json
+npx shadcn@latest add http://localhost:3000/r/dropdrawer.json
 ```
 
 This will automatically:

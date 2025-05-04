@@ -44,17 +44,105 @@ export default function DropDrawerPage() {
             <PostExample />
           </section>
 
-          {/* <section>
+          <section>
             <h2 className="text-xl font-medium mb-4">Installation</h2>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                Install using the shadcn CLI:
-              </p>
-              <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
-                <code>npx shadcn-ui@latest add drop-drawer</code>
-              </pre>
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-lg font-medium mb-2">
+                  Using shadcn registry (Recommended)
+                </h3>
+                <p className="text-sm text-muted-foreground mb-2">
+                  The easiest way to install DropDrawer is through the shadcn
+                  registry:
+                </p>
+                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
+                  <code>
+                    pnpm dlx shadcn@latest add
+                    https://dropdrawer.jiawei.dev/r/dropdrawer.json
+                  </code>
+                </pre>
+                <p className="text-sm text-muted-foreground mt-2">
+                  You can also use npm:
+                </p>
+                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
+                  <code>
+                    npx shadcn@latest add
+                    https://dropdrawer.jiawei.dev/r/dropdrawer.json
+                  </code>
+                </pre>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium mb-2">
+                  Manual Installation
+                </h3>
+                <p className="text-sm text-muted-foreground mb-2">
+                  1. Copy the dropdown-menu and drawer components from
+                  shadcn/ui:
+                </p>
+                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
+                  <code>npx shadcn@latest add dropdown-menu drawer</code>
+                </pre>
+                <p className="text-sm text-muted-foreground mt-2">
+                  For detailed manual installation steps, please refer to the{" "}
+                  <a
+                    href="https://github.com/jiaweing/dropdrawer"
+                    className="underline"
+                  >
+                    README
+                  </a>
+                  .
+                </p>
+              </div>
             </div>
-          </section> */}
+          </section>
+
+          <section>
+            <h2 className="text-xl font-medium mb-4">Usage</h2>
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-lg font-medium mb-2">
+                  Migrating from DropdownMenu
+                </h3>
+                <p className="text-sm text-muted-foreground mb-2">
+                  DropDrawer is designed as a drop-in replacement for
+                  shadcn/ui&apos;s DropdownMenu component. Simply replace your
+                  imports:
+                </p>
+                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
+                  <code>{`import { DropDrawer, DropDrawerContent, DropDrawerItem, DropDrawerTrigger } from "@/components/ui/dropdrawer";`}</code>
+                </pre>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium mb-2">Basic Example</h3>
+                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
+                  <code>{`import {
+  DropDrawer,
+  DropDrawerContent,
+  DropDrawerItem,
+  DropDrawerTrigger,
+} from "@/components/ui/dropdrawer";
+import { Button } from "@/components/ui/button";
+
+export function Example() {
+  return (
+    <DropDrawer>
+      <DropDrawerTrigger asChild>
+        <Button>Open Menu</Button>
+      </DropDrawerTrigger>
+      <DropDrawerContent>
+        <DropDrawerItem>Item 1</DropDrawerItem>
+        <DropDrawerItem>Item 2</DropDrawerItem>
+        <DropDrawerItem>Item 3</DropDrawerItem>
+      </DropDrawerContent>
+    </DropDrawer>
+  );
+}`}</code>
+                </pre>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
     </div>
