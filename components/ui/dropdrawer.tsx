@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import * as React from "react";
 
@@ -96,6 +97,10 @@ function DropDrawerContent({
   const [submenuStack, setSubmenuStack] = React.useState<
     { id: string; title: string }[]
   >([]);
+  // Add animation direction state
+  const [animationDirection, setAnimationDirection] = React.useState<
+    "forward" | "backward"
+  >("forward");
 
   // Create a ref to store submenu content by ID
   const submenuContentRef = React.useRef<Map<string, React.ReactNode[]>>(
@@ -104,6 +109,8 @@ function DropDrawerContent({
 
   // Function to navigate to a submenu
   const navigateToSubmenu = React.useCallback((id: string, title: string) => {
+    // Set animation direction to forward when navigating to a submenu
+    setAnimationDirection("forward");
     setActiveSubmenu(id);
     setSubmenuTitle(title);
     setSubmenuStack((prev) => [...prev, { id, title }]);
@@ -111,6 +118,9 @@ function DropDrawerContent({
 
   // Function to go back to previous menu
   const goBack = React.useCallback(() => {
+    // Set animation direction to backward when going back
+    setAnimationDirection("backward");
+
     if (submenuStack.length <= 1) {
       // If we're at the first level, go back to main menu
       setActiveSubmenu(null);
@@ -134,6 +144,130 @@ function DropDrawerContent({
     },
     []
   );
+
+  // Function to extract submenu content
+  const extractSubmenuContent = React.useCallback(
+    (elements: React.ReactNode, targetId: string): React.ReactNode[] => {
+      const result: React.ReactNode[] = [];
+
+      // Recursive function to search through all children
+      const findSubmenuContent = (node: React.ReactNode) => {
+        // Skip if not a valid element
+        if (!React.isValidElement(node)) return;
+
+        const element = node as React.ReactElement;
+        // Use a more specific type to avoid 'any'
+        const props = element.props as {
+          id?: string;
+          "data-submenu-id"?: string;
+          children?: React.ReactNode;
+        };
+
+        // Check if this is a DropDrawerSub
+        if (element.type === DropDrawerSub) {
+          // Get all possible ID values
+          const elementId = props.id;
+          const dataSubmenuId = props["data-submenu-id"];
+
+          // If this is the submenu we're looking for
+          if (elementId === targetId || dataSubmenuId === targetId) {
+            // Find the SubContent within this Sub
+            if (props.children) {
+              React.Children.forEach(props.children, (child) => {
+                if (
+                  React.isValidElement(child) &&
+                  child.type === DropDrawerSubContent
+                ) {
+                  // Add all children of the SubContent to the result
+                  const subContentProps = child.props as {
+                    children?: React.ReactNode;
+                  };
+                  if (subContentProps.children) {
+                    React.Children.forEach(
+                      subContentProps.children,
+                      (contentChild) => {
+                        result.push(contentChild);
+                      }
+                    );
+                  }
+                }
+              });
+            }
+            return; // Found what we needed, no need to search deeper
+          }
+        }
+
+        // If this element has children, search through them
+        if (props.children) {
+          if (Array.isArray(props.children)) {
+            props.children.forEach((child: React.ReactNode) =>
+              findSubmenuContent(child)
+            );
+          } else {
+            findSubmenuContent(props.children);
+          }
+        }
+      };
+
+      // Start the search from the root elements
+      if (Array.isArray(elements)) {
+        elements.forEach((child) => findSubmenuContent(child));
+      } else {
+        findSubmenuContent(elements);
+      }
+
+      return result;
+    },
+    []
+  );
+
+  // Get submenu content (either from cache or extract it)
+  const getSubmenuContent = React.useCallback(
+    (id: string) => {
+      // Check if we have the content in our ref
+      const cachedContent = submenuContentRef.current.get(id || "");
+      if (cachedContent && cachedContent.length > 0) {
+        return cachedContent;
+      }
+
+      // If not in cache, extract it
+      const submenuContent = extractSubmenuContent(children, id);
+
+      if (submenuContent.length === 0) {
+        return [];
+      }
+
+      // Store in cache for future use
+      if (id) {
+        submenuContentRef.current.set(id, submenuContent);
+      }
+
+      return submenuContent;
+    },
+    [children, extractSubmenuContent]
+  );
+
+  // Animation variants for Framer Motion
+  const variants = {
+    enter: (direction: "forward" | "backward") => ({
+      x: direction === "forward" ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: "forward" | "backward") => ({
+      x: direction === "forward" ? "-100%" : "100%",
+      opacity: 0,
+    }),
+  };
+
+  // Animation transition
+  const transition = {
+    duration: 0.3,
+    ease: [0.25, 0.1, 0.25, 1.0], // cubic-bezier easing
+  };
 
   if (isMobile) {
     return (
@@ -171,122 +305,28 @@ function DropDrawerContent({
                   <DrawerTitle>{submenuTitle || "Submenu"}</DrawerTitle>
                 </div>
               </DrawerHeader>
-              <div className="flex-1 overflow-y-auto">
-                {/* Find and render the active submenu content */}
-                <div className="pb-6 space-y-1.5">
-                  {(() => {
-                    // Function to extract submenu content
-                    const extractSubmenuContent = (
-                      elements: React.ReactNode,
-                      targetId: string
-                    ): React.ReactNode[] => {
-                      const result: React.ReactNode[] = [];
-
-                      // Recursive function to search through all children
-                      const findSubmenuContent = (node: React.ReactNode) => {
-                        // Skip if not a valid element
-                        if (!React.isValidElement(node)) return;
-
-                        const element = node as React.ReactElement;
-                        // Use a more specific type to avoid 'any'
-                        const props = element.props as {
-                          id?: string;
-                          "data-submenu-id"?: string;
-                          children?: React.ReactNode;
-                        };
-
-                        // Check if this is a DropDrawerSub
-                        if (element.type === DropDrawerSub) {
-                          // Get all possible ID values
-                          const elementId = props.id;
-                          const dataSubmenuId = props["data-submenu-id"];
-
-                          // If this is the submenu we're looking for
-                          if (
-                            elementId === targetId ||
-                            dataSubmenuId === targetId
-                          ) {
-                            // Find the SubContent within this Sub
-                            if (props.children) {
-                              React.Children.forEach(
-                                props.children,
-                                (child) => {
-                                  if (
-                                    React.isValidElement(child) &&
-                                    child.type === DropDrawerSubContent
-                                  ) {
-                                    // Add all children of the SubContent to the result
-                                    const subContentProps = child.props as {
-                                      children?: React.ReactNode;
-                                    };
-                                    if (subContentProps.children) {
-                                      React.Children.forEach(
-                                        subContentProps.children,
-                                        (contentChild) => {
-                                          result.push(contentChild);
-                                        }
-                                      );
-                                    }
-                                  }
-                                }
-                              );
-                            }
-                            return; // Found what we needed, no need to search deeper
-                          }
-                        }
-
-                        // If this element has children, search through them
-                        if (props.children) {
-                          if (Array.isArray(props.children)) {
-                            props.children.forEach((child: React.ReactNode) =>
-                              findSubmenuContent(child)
-                            );
-                          } else {
-                            findSubmenuContent(props.children);
-                          }
-                        }
-                      };
-
-                      // Start the search from the root elements
-                      if (Array.isArray(elements)) {
-                        elements.forEach((child) => findSubmenuContent(child));
-                      } else {
-                        findSubmenuContent(elements);
-                      }
-
-                      return result;
-                    };
-
-                    // Extract and render submenu content
-                    // Check if we have the content in our ref
-                    const cachedContent = submenuContentRef.current.get(
-                      activeSubmenu || ""
-                    );
-                    if (cachedContent && cachedContent.length > 0) {
-                      return cachedContent;
-                    }
-
-                    // If not in cache, extract it
-                    const submenuContent = extractSubmenuContent(
-                      children,
-                      activeSubmenu
-                    );
-
-                    if (submenuContent.length === 0) {
-                      return <></>;
-                    }
-
-                    // Store in cache for future use
-                    if (activeSubmenu) {
-                      submenuContentRef.current.set(
-                        activeSubmenu,
-                        submenuContent
-                      );
-                    }
-
-                    return submenuContent;
-                  })()}
-                </div>
+              <div className="flex-1 overflow-hidden relative">
+                {/* Use AnimatePresence to handle exit animations */}
+                <AnimatePresence
+                  initial={false}
+                  mode="wait"
+                  custom={animationDirection}
+                >
+                  <motion.div
+                    key={activeSubmenu || "main"}
+                    custom={animationDirection}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={transition}
+                    className="pb-6 space-y-1.5 w-full overflow-y-auto h-full"
+                  >
+                    {activeSubmenu
+                      ? getSubmenuContent(activeSubmenu)
+                      : children}
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </>
           ) : (
@@ -294,7 +334,26 @@ function DropDrawerContent({
               <DrawerHeader className="sr-only">
                 <DrawerTitle>Menu</DrawerTitle>
               </DrawerHeader>
-              <div className="pb-6 space-y-1.5">{children}</div>
+              <div className="overflow-hidden">
+                <AnimatePresence
+                  initial={false}
+                  mode="wait"
+                  custom={animationDirection}
+                >
+                  <motion.div
+                    key="main-menu"
+                    custom={animationDirection}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={transition}
+                    className="pb-6 space-y-1.5 w-full overflow-y-auto"
+                  >
+                    {children}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </>
           )}
         </DrawerContent>
@@ -418,7 +477,7 @@ function DropDrawerItem({
     // Check if this is inside a submenu
     const isInSubmenu =
       (props as Record<string, unknown>)["data-parent-submenu-id"] ||
-      (props as Record<string, unknown>).parentSubmenuId;
+      (props as Record<string, unknown>)["data-parent-submenu"];
 
     if (isInSubmenu) {
       return content;
@@ -677,7 +736,8 @@ function DropDrawerSub({
             ...(child.props as object),
             "data-parent-submenu-id": submenuId,
             "data-submenu-id": submenuId,
-            parentSubmenuId: submenuId,
+            // Use only data attributes, not custom props
+            "data-parent-submenu": submenuId,
           } as React.HTMLAttributes<HTMLElement>
         );
       }
@@ -689,7 +749,8 @@ function DropDrawerSub({
             ...(child.props as object),
             "data-parent-submenu-id": submenuId,
             "data-submenu-id": submenuId,
-            parentSubmenuId: submenuId,
+            // Use only data attributes, not custom props
+            "data-parent-submenu": submenuId,
           } as React.HTMLAttributes<HTMLElement>
         );
       }
@@ -794,7 +855,7 @@ function DropDrawerSubTrigger({
           ((props as Record<string, unknown>)[
             "data-parent-submenu-id"
           ] as string) ||
-          ((props as Record<string, unknown>).parentSubmenuId as string);
+          ((props as Record<string, unknown>)["data-parent-submenu"] as string);
       }
 
       if (!submenuId) {

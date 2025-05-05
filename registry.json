@@ -8,6 +8,7 @@
       "type": "registry:component",
       "title": "DropDrawer",
       "description": "A responsive component that automatically switches between a dropdown menu on desktop and a drawer on mobile devices for shadcn/ui.",
+      "dependencies": ["framer-motion"],
       "registryDependencies": ["dropdown-menu", "drawer", "use-mobile"],
       "files": [
         {
