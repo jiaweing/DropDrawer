@@ -37,7 +37,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider defaultTheme="system" storageKey="dropdrawer-theme">
-          {children}
+          <div vaul-drawer-wrapper="" className="bg-background">
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
