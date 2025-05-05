@@ -289,7 +289,7 @@ function DropDrawerContent({
       >
         <DrawerContent
           data-slot="drop-drawer-content"
-          className={cn(className)}
+          className={cn("max-h-[90vh]", className)}
           {...props}
         >
           {activeSubmenu ? (
@@ -305,7 +305,7 @@ function DropDrawerContent({
                   <DrawerTitle>{submenuTitle || "Submenu"}</DrawerTitle>
                 </div>
               </DrawerHeader>
-              <div className="flex-1 overflow-hidden relative">
+              <div className="flex-1 relative overflow-y-auto max-h-[70vh]">
                 {/* Use AnimatePresence to handle exit animations */}
                 <AnimatePresence
                   initial={false}
@@ -320,7 +320,7 @@ function DropDrawerContent({
                     animate="center"
                     exit="exit"
                     transition={transition}
-                    className="pb-6 space-y-1.5 w-full overflow-y-auto h-full"
+                    className="pb-6 space-y-1.5 w-full h-full"
                   >
                     {activeSubmenu
                       ? getSubmenuContent(activeSubmenu)
@@ -334,7 +334,7 @@ function DropDrawerContent({
               <DrawerHeader className="sr-only">
                 <DrawerTitle>Menu</DrawerTitle>
               </DrawerHeader>
-              <div className="overflow-hidden">
+              <div className="overflow-y-auto max-h-[70vh]">
                 <AnimatePresence
                   initial={false}
                   mode="wait"
@@ -348,7 +348,7 @@ function DropDrawerContent({
                     animate="center"
                     exit="exit"
                     transition={transition}
-                    className="pb-6 space-y-1.5 w-full overflow-y-auto"
+                    className="pb-6 space-y-1.5 w-full"
                   >
                     {children}
                   </motion.div>
