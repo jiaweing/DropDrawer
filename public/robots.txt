@@ -1,0 +1,6 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://dropdrawer.jiawei.dev/sitemap.xml

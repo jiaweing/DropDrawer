@@ -14,16 +14,69 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DropDrawer - A responsive dropdown/drawer component",
+  title: "DropDrawer - A responsive dropdown/drawer component for shadcn/ui",
   description:
-    "A responsive component that renders as a dropdown on desktop and a drawer on mobile",
+    "A responsive component that automatically switches between a dropdown menu on desktop and a drawer on mobile devices for shadcn/ui",
+  keywords: [
+    "dropdown menu",
+    "drawer",
+    "responsive",
+    "mobile-friendly",
+    "shadcn/ui",
+    "React",
+    "Next.js",
+    "UI component",
+    "TypeScript",
+    "Tailwind CSS",
+  ],
+  authors: [
+    {
+      name: "Jay",
+      url: "https://github.com/jiaweing",
+    },
+  ],
+  creator: "Jay",
+  publisher: "Jay",
+  metadataBase: new URL("https://dropdrawer.jiawei.dev"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://dropdrawer.jiawei.dev",
+    title: "DropDrawer - A responsive dropdown/drawer component for shadcn/ui",
+    description:
+      "A responsive component that automatically switches between a dropdown menu on desktop and a drawer on mobile devices for shadcn/ui",
+    siteName: "DropDrawer",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DropDrawer - A responsive dropdown/drawer component for shadcn/ui",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DropDrawer - A responsive dropdown/drawer component for shadcn/ui",
+    description:
+      "A responsive component that automatically switches between a dropdown menu on desktop and a drawer on mobile devices for shadcn/ui",
+    images: ["/og-image.png"],
+    creator: "@jiaweing",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#242424" },
+  ],
 };
 
 export default function RootLayout({

@@ -1,6 +1,7 @@
 "use client";
 
 import { ModeToggle } from "@/components/mode-toggle";
+import { StructuredData } from "@/components/structured-data";
 import { Code } from "@/components/ui/code";
 import { CodeBlock } from "@/components/ui/code-block";
 import { PostExample } from "../examples/post-example";
@@ -8,6 +9,7 @@ import { PostExample } from "../examples/post-example";
 export default function DropDrawerPage() {
   return (
     <div className="min-h-screen flex flex-col max-w-3xl mx-auto px-8 py-16 md:py-24">
+      <StructuredData />
       <header className="flex justify-between items-center mb-16">
         <a
           href="https://github.com/jiaweing/DropDrawer"
