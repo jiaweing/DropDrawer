@@ -171,9 +171,16 @@ function DropDrawerContent({
                       // Helper function to process a single element
                       const processElement = (element: React.ReactElement) => {
                         // Check if this is a DropDrawerSub with matching ID
+                        // First check for explicit ID prop
+                        const elementId = (element.props as { id?: string }).id;
+                        // Then check for data-submenu-id attribute
+                        const dataSubmenuId = (
+                          element.props as { "data-submenu-id"?: string }
+                        )["data-submenu-id"];
+
                         if (
                           element.type === DropDrawerSub &&
-                          (element.props as { id?: string }).id === targetId
+                          (elementId === targetId || dataSubmenuId === targetId)
                         ) {
                           // Find the SubContent within this Sub
                           React.Children.forEach(
@@ -625,8 +632,14 @@ function DropDrawerSub({
     );
   }
 
+  // For desktop, pass the generated ID to the DropdownMenuSub
   return (
-    <DropdownMenuSub data-slot="drop-drawer-sub" {...props}>
+    <DropdownMenuSub
+      data-slot="drop-drawer-sub"
+      data-submenu-id={submenuId}
+      // Don't pass id to DropdownMenuSub as it doesn't accept this prop
+      {...props}
+    >
       {children}
     </DropdownMenuSub>
   );

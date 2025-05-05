@@ -145,6 +145,49 @@ export function Example() {
                   language="tsx"
                 />
               </div>
+
+              <div>
+                <h3 className="text-lg font-medium mb-2">Nested Submenus</h3>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Create complex navigation structures with nested submenus.
+                  Submenu IDs are automatically generated.
+                </p>
+                <CodeBlock
+                  code={`import {
+  DropDrawer,
+  DropDrawerContent,
+  DropDrawerItem,
+  DropDrawerSub,
+  DropDrawerSubContent,
+  DropDrawerSubTrigger,
+  DropDrawerTrigger,
+} from "@/components/ui/dropdrawer";
+import { Button } from "@/components/ui/button";
+
+export function NestedExample() {
+  return (
+    <DropDrawer>
+      <DropDrawerTrigger asChild>
+        <Button>Open Menu</Button>
+      </DropDrawerTrigger>
+      <DropDrawerContent>
+        <DropDrawerItem>Item 1</DropDrawerItem>
+        {/* Submenu IDs are automatically generated - no need to specify them */}
+        <DropDrawerSub>
+          <DropDrawerSubTrigger>Submenu</DropDrawerSubTrigger>
+          <DropDrawerSubContent>
+            <DropDrawerItem>Submenu Item 1</DropDrawerItem>
+            <DropDrawerItem>Submenu Item 2</DropDrawerItem>
+          </DropDrawerSubContent>
+        </DropDrawerSub>
+        <DropDrawerItem>Item 3</DropDrawerItem>
+      </DropDrawerContent>
+    </DropDrawer>
+  );
+}`}
+                  language="tsx"
+                />
+              </div>
             </div>
           </section>
         </div>

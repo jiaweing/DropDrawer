@@ -64,7 +64,7 @@ export function PostExample() {
             <DropDrawerContent>
               {/* First group: Add to feed, Save, Not interested */}
               <DropDrawerGroup>
-                <DropDrawerSub id="add-to-feed">
+                <DropDrawerSub>
                   <DropDrawerSubTrigger
                     icon={<LayoutDashboard className="h-5 w-5" />}
                   >
@@ -102,7 +102,7 @@ export function PostExample() {
                 <DropDrawerItem icon={<UserXIcon className="h-5 w-5" />}>
                   Unfollow
                 </DropDrawerItem>
-                <DropDrawerSub id="advanced-options">
+                <DropDrawerSub>
                   <DropDrawerSubTrigger icon={<Settings className="h-5 w-5" />}>
                     Advanced options
                   </DropDrawerSubTrigger>
@@ -118,7 +118,7 @@ export function PostExample() {
                       </DropDrawerItem>
                     </DropDrawerGroup>
                     <DropDrawerSeparator />
-                    <DropDrawerSub id="nested-submenu">
+                    <DropDrawerSub>
                       <DropDrawerSubTrigger
                         icon={<ShieldIcon className="h-5 w-5" />}
                       >

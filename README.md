@@ -438,6 +438,15 @@ An item in the dropdown/drawer.
 | `disabled` | `boolean`                                 | Whether the item is disabled   |
 | `children` | `React.ReactNode`                         | The content of the item        |
 
+### DropDrawerSub
+
+A container for submenu content. Submenu IDs are automatically generated, so you don't need to specify them.
+
+| Prop       | Type              | Description                                                           |
+| ---------- | ----------------- | --------------------------------------------------------------------- |
+| `id`       | `string`          | Optional ID for the submenu (auto-generated if not provided)          |
+| `children` | `React.ReactNode` | The content of the submenu (should include SubTrigger and SubContent) |
+
 ## Credits
 
 - [shadcn/ui](https://github.com/shadcn-ui/ui) by [shadcn](https://github.com/shadcn)
