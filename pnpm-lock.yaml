@@ -29,6 +29,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      framer-motion:
+        specifier: ^12.9.4
+        version: 12.9.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       lucide-react:
         specifier: ^0.507.0
         version: 0.507.0(react@19.1.0)
@@ -47,15 +50,9 @@ importers:
       shiki:
         specifier: ^3.3.0
         version: 3.3.0
-      shikiji:
-        specifier: ^0.10.2
-        version: 0.10.2
       tailwind-merge:
         specifier: ^3.2.0
         version: 3.2.0
-      tw-animate-css:
-        specifier: ^1.2.9
-        version: 1.2.9
       vaul:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.1.3(@types/react@19.1.2))(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1787,6 +1784,20 @@ packages:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
 
+  framer-motion@12.9.4:
+    resolution: {integrity: sha512-yaeGDmGQ3eCQEwZ95/pRQMaSh/Q4E2CK6JYOclG/PdjyQad0MULJ+JFVV8911Fl5a6tF6o0wgW8Dpl5Qx4Adjg==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   fresh@2.0.0:
     resolution: {integrity: sha512-Rx/WycZ60HOaqLKAi6cHRKKI7zxWbJ31MhntmtwMoaTeF7XFH9hhBp8vITaMidfljRQ6eYWCKkaTK+ykVJHP2A==}
     engines: {node: '>= 0.8'}
@@ -2332,6 +2343,12 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  motion-dom@12.9.4:
+    resolution: {integrity: sha512-25TWkQPj5I18m+qVjXGtCsxboY11DaRC5HMjd29tHKExazW4Zf4XtAagBdLpyKsVuAxEQ6cx5/E4AB21PFpLnQ==}
+
+  motion-utils@12.9.4:
+    resolution: {integrity: sha512-BW3I65zeM76CMsfh3kHid9ansEJk9Qvl+K5cu4DVHKGsI52n76OJ4z2CUJUV+Mn3uEP9k1JJA3tClG0ggSrRcg==}
+
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
@@ -2773,14 +2790,6 @@ packages:
   shiki@3.3.0:
     resolution: {integrity: sha512-j0Z1tG5vlOFGW8JVj0Cpuatzvshes7VJy5ncDmmMaYcmnGW0Js1N81TOW98ivTFNZfKRn9uwEg/aIm638o368g==}
 
-  shikiji-core@0.10.2:
-    resolution: {integrity: sha512-9Of8HMlF96usXJHmCL3Gd0Fcf0EcyJUF9m8EoAKKd98mHXi0La2AZl1h6PegSFGtiYcBDK/fLuKbDa1l16r1fA==}
-    deprecated: Deprecated, use @shikijs/core instead
-
-  shikiji@0.10.2:
-    resolution: {integrity: sha512-wtZg3T0vtYV2PnqusWQs3mDaJBdCPWxFDrBM/SE5LfrX92gjUvfEMlc+vJnoKY6Z/S44OWaCRzNIsdBRWcTAiw==}
-    deprecated: Deprecated, use shiki instead
-
   side-channel-list@1.0.0:
     resolution: {integrity: sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA==}
     engines: {node: '>= 0.4'}
@@ -2967,9 +2976,6 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
-
-  tw-animate-css@1.2.9:
-    resolution: {integrity: sha512-9O4k1at9pMQff9EAcCEuy1UNO43JmaPQvq+0lwza9Y0BQ6LB38NiMj+qHqjoQf40355MX+gs6wtlR6H9WsSXFg==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -5045,6 +5051,15 @@ snapshots:
 
   forwarded@0.2.0: {}
 
+  framer-motion@12.9.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      motion-dom: 12.9.4
+      motion-utils: 12.9.4
+      tslib: 2.8.1
+    optionalDependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+
   fresh@2.0.0: {}
 
   fs-extra@11.3.0:
@@ -5553,6 +5568,12 @@ snapshots:
   minimist@1.2.8: {}
 
   mkdirp@2.1.6: {}
+
+  motion-dom@12.9.4:
+    dependencies:
+      motion-utils: 12.9.4
+
+  motion-utils@12.9.4: {}
 
   ms@2.1.3: {}
 
@@ -6108,12 +6129,6 @@ snapshots:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
 
-  shikiji-core@0.10.2: {}
-
-  shikiji@0.10.2:
-    dependencies:
-      shikiji-core: 0.10.2
-
   side-channel-list@1.0.0:
     dependencies:
       es-errors: 1.3.0
@@ -6320,8 +6335,6 @@ snapshots:
       strip-bom: 3.0.0
 
   tslib@2.8.1: {}
-
-  tw-animate-css@1.2.9: {}
 
   type-check@0.4.0:
     dependencies:
