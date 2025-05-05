@@ -26,37 +26,6 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
-type BaseProps = {
-  children: React.ReactNode;
-};
-
-type RootDropDrawerProps = BaseProps & {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-};
-
-type DropDrawerProps = BaseProps & {
-  className?: string;
-  asChild?: true;
-};
-
-type DropDrawerSeparatorProps = {
-  className?: string;
-};
-
-type DropDrawerGroupProps = BaseProps & {
-  className?: string;
-};
-
-type DropDrawerItemProps = DropDrawerProps & {
-  onSelect?: (event: Event) => void;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
-  icon?: React.ReactNode;
-  variant?: "default" | "destructive";
-  inset?: boolean;
-  disabled?: boolean;
-};
-
 const DropDrawerContext = React.createContext<{ isMobile: boolean }>({
   isMobile: false,
 });
@@ -71,7 +40,12 @@ const useDropDrawerContext = () => {
   return context;
 };
 
-function DropDrawer({ children, ...props }: RootDropDrawerProps) {
+function DropDrawer({
+  children,
+  ...props
+}:
+  | React.ComponentProps<typeof Drawer>
+  | React.ComponentProps<typeof DropdownMenu>) {
   const isMobile = useIsMobile();
   const DropdownComponent = isMobile ? Drawer : DropdownMenu;
 
@@ -88,7 +62,13 @@ function DropDrawer({ children, ...props }: RootDropDrawerProps) {
   );
 }
 
-function DropDrawerTrigger({ className, children, ...props }: DropDrawerProps) {
+function DropDrawerTrigger({
+  className,
+  children,
+  ...props
+}:
+  | React.ComponentProps<typeof DrawerTrigger>
+  | React.ComponentProps<typeof DropdownMenuTrigger>) {
   const { isMobile } = useDropDrawerContext();
   const TriggerComponent = isMobile ? DrawerTrigger : DropdownMenuTrigger;
 
@@ -103,7 +83,13 @@ function DropDrawerTrigger({ className, children, ...props }: DropDrawerProps) {
   );
 }
 
-function DropDrawerContent({ className, children, ...props }: DropDrawerProps) {
+function DropDrawerContent({
+  className,
+  children,
+  ...props
+}:
+  | React.ComponentProps<typeof DrawerContent>
+  | React.ComponentProps<typeof DropdownMenuContent>) {
   const { isMobile } = useDropDrawerContext();
   const [activeSubmenu, setActiveSubmenu] = React.useState<string | null>(null);
   const [submenuTitle, setSubmenuTitle] = React.useState<string | null>(null);
@@ -300,7 +286,9 @@ function DropDrawerItem({
   inset,
   disabled,
   ...props
-}: DropDrawerItemProps) {
+}: React.ComponentProps<typeof DropdownMenuItem> & {
+  icon?: React.ReactNode;
+}) {
   const { isMobile } = useDropDrawerContext();
 
   // Define hooks outside of conditionals to follow React rules
@@ -411,7 +399,7 @@ function DropDrawerItem({
 function DropDrawerSeparator({
   className,
   ...props
-}: DropDrawerSeparatorProps) {
+}: React.ComponentProps<typeof DropdownMenuSeparator>) {
   const { isMobile } = useDropDrawerContext();
 
   // For mobile, render a simple divider
@@ -429,7 +417,13 @@ function DropDrawerSeparator({
   );
 }
 
-function DropDrawerLabel({ className, children, ...props }: DropDrawerProps) {
+function DropDrawerLabel({
+  className,
+  children,
+  ...props
+}:
+  | React.ComponentProps<typeof DropdownMenuLabel>
+  | React.ComponentProps<typeof DrawerTitle>) {
   const { isMobile } = useDropDrawerContext();
 
   if (isMobile) {
@@ -460,7 +454,11 @@ function DropDrawerLabel({ className, children, ...props }: DropDrawerProps) {
   );
 }
 
-function DropDrawerFooter({ className, children, ...props }: DropDrawerProps) {
+function DropDrawerFooter({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof DrawerFooter> | React.ComponentProps<"div">) {
   const { isMobile } = useDropDrawerContext();
 
   if (isMobile) {
@@ -491,7 +489,9 @@ function DropDrawerGroup({
   className,
   children,
   ...props
-}: DropDrawerGroupProps) {
+}: React.ComponentProps<"div"> & {
+  children: React.ReactNode;
+}) {
   const { isMobile } = useDropDrawerContext();
 
   // Add separators between children on mobile
@@ -573,10 +573,7 @@ function DropDrawerSub({
   children,
   id,
   ...props
-}: {
-  children: React.ReactNode;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
+}: React.ComponentProps<typeof DropdownMenuSub> & {
   id?: string;
 }) {
   const { isMobile } = useDropDrawerContext();
@@ -640,7 +637,9 @@ function DropDrawerSubTrigger({
   inset,
   children,
   ...props
-}: DropDrawerProps & { inset?: boolean; icon?: React.ReactNode }) {
+}: React.ComponentProps<typeof DropdownMenuSubTrigger> & {
+  icon?: React.ReactNode;
+}) {
   const { isMobile } = useDropDrawerContext();
   const { navigateToSubmenu } = React.useContext(SubmenuContext);
 
@@ -781,7 +780,7 @@ function DropDrawerSubContent({
   sideOffset = 4,
   children,
   ...props
-}: DropDrawerProps & { sideOffset?: number }) {
+}: React.ComponentProps<typeof DropdownMenuSubContent>) {
   const { isMobile } = useDropDrawerContext();
 
   if (isMobile) {
