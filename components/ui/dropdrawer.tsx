@@ -97,6 +97,11 @@ function DropDrawerContent({
     { id: string; title: string }[]
   >([]);
 
+  // Create a ref to store submenu content by ID
+  const submenuContentRef = React.useRef<Map<string, React.ReactNode[]>>(
+    new Map()
+  );
+
   // Function to navigate to a submenu
   const navigateToSubmenu = React.useCallback((id: string, title: string) => {
     setActiveSubmenu(id);
@@ -122,6 +127,14 @@ function DropDrawerContent({
     }
   }, [submenuStack]);
 
+  // Function to register submenu content
+  const registerSubmenuContent = React.useCallback(
+    (id: string, content: React.ReactNode[]) => {
+      submenuContentRef.current.set(id, content);
+    },
+    []
+  );
+
   if (isMobile) {
     return (
       <SubmenuContext.Provider
@@ -137,6 +150,7 @@ function DropDrawerContent({
           submenuTitle,
           setSubmenuTitle,
           navigateToSubmenu,
+          registerSubmenuContent,
         }}
       >
         <DrawerContent
@@ -168,74 +182,91 @@ function DropDrawerContent({
                     ): React.ReactNode[] => {
                       const result: React.ReactNode[] = [];
 
-                      // Helper function to process a single element
-                      const processElement = (element: React.ReactElement) => {
-                        // Check if this is a DropDrawerSub with matching ID
-                        // First check for explicit ID prop
-                        const elementId = (element.props as { id?: string }).id;
-                        // Then check for data-submenu-id attribute
-                        const dataSubmenuId = (
-                          element.props as { "data-submenu-id"?: string }
-                        )["data-submenu-id"];
+                      // Recursive function to search through all children
+                      const findSubmenuContent = (node: React.ReactNode) => {
+                        // Skip if not a valid element
+                        if (!React.isValidElement(node)) return;
 
-                        if (
-                          element.type === DropDrawerSub &&
-                          (elementId === targetId || dataSubmenuId === targetId)
-                        ) {
-                          // Find the SubContent within this Sub
-                          React.Children.forEach(
-                            (element.props as { children: React.ReactNode })
-                              .children,
-                            (subChild) => {
-                              if (
-                                React.isValidElement(subChild) &&
-                                subChild.type === DropDrawerSubContent
-                              ) {
-                                // Add all children of the SubContent to the result
-                                React.Children.forEach(
-                                  (
-                                    subChild.props as {
-                                      children: React.ReactNode;
+                        const element = node as React.ReactElement;
+                        // Use a more specific type to avoid 'any'
+                        const props = element.props as {
+                          id?: string;
+                          "data-submenu-id"?: string;
+                          children?: React.ReactNode;
+                        };
+
+                        // Check if this is a DropDrawerSub
+                        if (element.type === DropDrawerSub) {
+                          // Get all possible ID values
+                          const elementId = props.id;
+                          const dataSubmenuId = props["data-submenu-id"];
+
+                          // If this is the submenu we're looking for
+                          if (
+                            elementId === targetId ||
+                            dataSubmenuId === targetId
+                          ) {
+                            // Find the SubContent within this Sub
+                            if (props.children) {
+                              React.Children.forEach(
+                                props.children,
+                                (child) => {
+                                  if (
+                                    React.isValidElement(child) &&
+                                    child.type === DropDrawerSubContent
+                                  ) {
+                                    // Add all children of the SubContent to the result
+                                    const subContentProps = child.props as {
+                                      children?: React.ReactNode;
+                                    };
+                                    if (subContentProps.children) {
+                                      React.Children.forEach(
+                                        subContentProps.children,
+                                        (contentChild) => {
+                                          result.push(contentChild);
+                                        }
+                                      );
                                     }
-                                  ).children,
-                                  (contentChild) => {
-                                    result.push(contentChild);
                                   }
-                                );
-                              }
+                                }
+                              );
                             }
-                          );
-                          return true;
-                        }
-
-                        // Check children recursively
-                        if (element.props) {
-                          const props = element.props as {
-                            children?: React.ReactNode;
-                          };
-                          if (props.children) {
-                            React.Children.forEach(props.children, (child) => {
-                              if (React.isValidElement(child)) {
-                                processElement(child);
-                              }
-                            });
+                            return; // Found what we needed, no need to search deeper
                           }
                         }
 
-                        return false;
+                        // If this element has children, search through them
+                        if (props.children) {
+                          if (Array.isArray(props.children)) {
+                            props.children.forEach((child: React.ReactNode) =>
+                              findSubmenuContent(child)
+                            );
+                          } else {
+                            findSubmenuContent(props.children);
+                          }
+                        }
                       };
 
-                      // Process all elements
-                      React.Children.forEach(elements, (child) => {
-                        if (React.isValidElement(child)) {
-                          processElement(child);
-                        }
-                      });
+                      // Start the search from the root elements
+                      if (Array.isArray(elements)) {
+                        elements.forEach((child) => findSubmenuContent(child));
+                      } else {
+                        findSubmenuContent(elements);
+                      }
 
                       return result;
                     };
 
                     // Extract and render submenu content
+                    // Check if we have the content in our ref
+                    const cachedContent = submenuContentRef.current.get(
+                      activeSubmenu || ""
+                    );
+                    if (cachedContent && cachedContent.length > 0) {
+                      return cachedContent;
+                    }
+
+                    // If not in cache, extract it
                     const submenuContent = extractSubmenuContent(
                       children,
                       activeSubmenu
@@ -243,6 +274,14 @@ function DropDrawerContent({
 
                     if (submenuContent.length === 0) {
                       return <></>;
+                    }
+
+                    // Store in cache for future use
+                    if (activeSubmenu) {
+                      submenuContentRef.current.set(
+                        activeSubmenu,
+                        submenuContent
+                      );
                     }
 
                     return submenuContent;
@@ -265,7 +304,13 @@ function DropDrawerContent({
 
   return (
     <SubmenuContext.Provider
-      value={{ activeSubmenu, setActiveSubmenu, submenuTitle, setSubmenuTitle }}
+      value={{
+        activeSubmenu,
+        setActiveSubmenu,
+        submenuTitle,
+        setSubmenuTitle,
+        registerSubmenuContent,
+      }}
     >
       <DropdownMenuContent
         data-slot="drop-drawer-content"
@@ -565,6 +610,7 @@ interface SubmenuContextType {
   submenuTitle: string | null;
   setSubmenuTitle: (title: string | null) => void;
   navigateToSubmenu?: (id: string, title: string) => void;
+  registerSubmenuContent?: (id: string, content: React.ReactNode[]) => void;
 }
 
 const SubmenuContext = React.createContext<SubmenuContextType>({
@@ -573,9 +619,13 @@ const SubmenuContext = React.createContext<SubmenuContextType>({
   submenuTitle: null,
   setSubmenuTitle: () => {},
   navigateToSubmenu: undefined,
+  registerSubmenuContent: undefined,
 });
 
 // Submenu components
+// Counter for generating simple numeric IDs
+let submenuIdCounter = 0;
+
 function DropDrawerSub({
   children,
   id,
@@ -584,9 +634,35 @@ function DropDrawerSub({
   id?: string;
 }) {
   const { isMobile } = useDropDrawerContext();
-  // Generate ID outside of conditionals
-  const generatedId = React.useId();
+  const { registerSubmenuContent } = React.useContext(SubmenuContext);
+
+  // Generate a simple numeric ID instead of using React.useId()
+  const [generatedId] = React.useState(() => `submenu-${submenuIdCounter++}`);
   const submenuId = id || generatedId;
+
+  // Extract submenu content to register with parent
+  React.useEffect(() => {
+    if (!registerSubmenuContent) return;
+
+    // Find the SubContent within this Sub
+    const contentItems: React.ReactNode[] = [];
+    React.Children.forEach(children, (child) => {
+      if (React.isValidElement(child) && child.type === DropDrawerSubContent) {
+        // Add all children of the SubContent to the result
+        React.Children.forEach(
+          (child.props as { children?: React.ReactNode }).children,
+          (contentChild) => {
+            contentItems.push(contentChild);
+          }
+        );
+      }
+    });
+
+    // Register the content with the parent
+    if (contentItems.length > 0) {
+      registerSubmenuContent(submenuId, contentItems);
+    }
+  }, [children, registerSubmenuContent, submenuId]);
 
   if (isMobile) {
     // For mobile, we'll use the context to manage submenu state
