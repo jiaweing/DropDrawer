@@ -545,7 +545,7 @@ An item in the dropdown/drawer.
 
 ### DropDrawerSub
 
-A container for submenu content. Submenu IDs are automatically generated, so you don't need to specify them.
+A container for submenu content.
 
 | Prop       | Type              | Description                                                           |
 | ---------- | ----------------- | --------------------------------------------------------------------- |

@@ -81,6 +81,7 @@ export function Code({ code, className, language = "bash" }: CodeProps) {
               code={code[pm as keyof typeof code] || ""}
               language={language}
               className="rounded-t-none"
+              showCopyButton={false}
             />
           </TabsContent>
         ))}

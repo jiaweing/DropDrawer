@@ -66,34 +66,6 @@ export default function DropDrawerPage() {
                   }}
                 />
               </div>
-
-              <div>
-                <h3 className="text-lg font-medium mb-2">
-                  Manual Installation
-                </h3>
-                <p className="text-sm text-muted-foreground mb-2">
-                  1. Copy the dropdown-menu and drawer components from
-                  shadcn/ui:
-                </p>
-                <Code
-                  code={{
-                    pnpm: "pnpm dlx shadcn@latest add dropdown-menu drawer",
-                    npm: "npx shadcn@latest add dropdown-menu drawer",
-                    yarn: "yarn dlx shadcn@latest add dropdown-menu drawer",
-                    bun: "bunx shadcn@latest add dropdown-menu drawer",
-                  }}
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  For detailed manual installation steps, please refer to the{" "}
-                  <a
-                    href="https://github.com/jiaweing/dropdrawer"
-                    className="underline"
-                  >
-                    README
-                  </a>
-                  .
-                </p>
-              </div>
             </div>
           </section>
 
@@ -107,14 +79,12 @@ export default function DropDrawerPage() {
                 <p className="text-sm text-muted-foreground mb-2">
                   DropDrawer is designed as a drop-in replacement for
                   shadcn/ui&apos;s DropdownMenu component. Simply replace your
-                  imports:
+                  imports.
                 </p>
-                <pre className="bg-muted p-3 rounded-md text-sm overflow-x-auto">
-                  <CodeBlock
-                    code={`import { DropDrawer, DropDrawerContent, DropDrawerItem, DropDrawerTrigger } from "@/components/ui/dropdrawer";`}
-                    language="tsx"
-                  />
-                </pre>
+                <CodeBlock
+                  code={`import { DropDrawer, DropDrawerContent, DropDrawerItem, DropDrawerTrigger } from "@/components/ui/dropdrawer";`}
+                  language="tsx"
+                />
               </div>
 
               <div>
@@ -150,7 +120,6 @@ export function Example() {
                 <h3 className="text-lg font-medium mb-2">Nested Submenus</h3>
                 <p className="text-sm text-muted-foreground mb-2">
                   Create complex navigation structures with nested submenus.
-                  Submenu IDs are automatically generated.
                 </p>
                 <CodeBlock
                   code={`import {
@@ -172,7 +141,6 @@ export function NestedExample() {
       </DropDrawerTrigger>
       <DropDrawerContent>
         <DropDrawerItem>Item 1</DropDrawerItem>
-        {/* Submenu IDs are automatically generated - no need to specify them */}
         <DropDrawerSub>
           <DropDrawerSubTrigger>Submenu</DropDrawerSubTrigger>
           <DropDrawerSubContent>
