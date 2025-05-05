@@ -624,7 +624,7 @@ function DropDrawerGroup({
         child,
         <div
           key={`separator-${index}`}
-          className="bg-border dark:bg-muted h-px"
+          className="bg-border h-px"
           aria-hidden="true"
         />,
       ];
