@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import * as React from "react";
 
 import {
@@ -166,14 +166,14 @@ function DropDrawerContent({
                     onClick={goBack}
                     className="hover:bg-muted/50 rounded-full p-1"
                   >
-                    <ChevronRightIcon className="h-5 w-5 rotate-180" />
+                    <ChevronLeftIcon className="h-5 w-5" />
                   </button>
                   <DrawerTitle>{submenuTitle || "Submenu"}</DrawerTitle>
                 </div>
               </DrawerHeader>
               <div className="flex-1 overflow-y-auto">
                 {/* Find and render the active submenu content */}
-                <div className="py-4 pb-6 space-y-1.5">
+                <div className="pb-6 space-y-1.5">
                   {(() => {
                     // Function to extract submenu content
                     const extractSubmenuContent = (
@@ -294,7 +294,7 @@ function DropDrawerContent({
               <DrawerHeader className="sr-only">
                 <DrawerTitle>Menu</DrawerTitle>
               </DrawerHeader>
-              <div className="py-4 pb-6 space-y-1.5">{children}</div>
+              <div className="pb-6 space-y-1.5">{children}</div>
             </>
           )}
         </DrawerContent>
