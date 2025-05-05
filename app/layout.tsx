@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@/components/theme-provider";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   title: "DropDrawer - A responsive dropdown/drawer component",
   description:
     "A responsive component that renders as a dropdown on desktop and a drawer on mobile",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
