@@ -1,11 +1,13 @@
 # DropDrawer
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/your-username/DropDrawer)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/jiaweing/dropdrawer)
 
 A responsive component that automatically switches between a dropdown menu on desktop and a drawer on mobile devices for shadcn/ui.
 
 A drop-in replacement for shadcn/ui's DropdownMenu component.
+
+**Demo:** [https://dropdrawer.jiawei.dev](https://dropdrawer.jiawei.dev)
 
 ## Why DropDrawer?
 
@@ -38,13 +40,17 @@ Traditional dropdown menus don't feel native on mobile devices - they can be dif
 The easiest way to install DropDrawer is through the shadcn registry:
 
 ```bash
+# pnpm
 pnpm dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
-```
 
-You can also use npm:
-
-```bash
+# npm
 npx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
+
+# yarn
+yarn dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
+
+# bun
+bunx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
 ```
 
 During local development, you can use:
@@ -64,7 +70,17 @@ This will automatically:
 1. Copy the `dropdown-menu` and `drawer` components from shadcn/ui.
 
 ```bash
+# pnpm
+pnpm dlx shadcn@latest add dropdown-menu drawer
+
+# npm
 npx shadcn@latest add dropdown-menu drawer
+
+# yarn
+yarn dlx shadcn@latest add dropdown-menu drawer
+
+# bun
+bunx shadcn@latest add dropdown-menu drawer
 ```
 
 Alternatively, if you are not using shadcn/ui cli, you can manually copy the components from [shadcn/ui](https://ui.shadcn.com/docs).
@@ -380,6 +396,94 @@ export function NestedExample() {
 }
 ```
 
+### Complex Example with Groups and Icons
+
+Here's a more complex example showing how to use groups, icons, and multiple nested submenus:
+
+```tsx
+import {
+  AlertTriangle,
+  BookmarkIcon,
+  Copy,
+  EyeOffIcon,
+  Home,
+  LayoutDashboard,
+  MoreVertical,
+  Settings,
+  ShieldIcon,
+  UserMinusIcon,
+  UserXIcon,
+} from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  DropDrawer,
+  DropDrawerContent,
+  DropDrawerGroup,
+  DropDrawerItem,
+  DropDrawerSeparator,
+  DropDrawerSub,
+  DropDrawerSubContent,
+  DropDrawerSubTrigger,
+  DropDrawerTrigger,
+} from "@/components/ui/dropdrawer";
+
+export function PostExample() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <DropDrawer open={open} onOpenChange={setOpen}>
+      <DropDrawerTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
+          <MoreVertical className="h-5 w-5" />
+        </Button>
+      </DropDrawerTrigger>
+      <DropDrawerContent>
+        {/* First group: Add to feed, Save, Not interested */}
+        <DropDrawerGroup>
+          <DropDrawerSub>
+            <DropDrawerSubTrigger
+              icon={<LayoutDashboard className="h-5 w-5" />}
+            >
+              Add to feed
+            </DropDrawerSubTrigger>
+            <DropDrawerSubContent>
+              <DropDrawerItem icon={<Home className="h-5 w-5" />}>
+                Home
+              </DropDrawerItem>
+              <DropDrawerItem icon={<LayoutDashboard className="h-5 w-5" />}>
+                Work
+              </DropDrawerItem>
+              <DropDrawerItem icon={<BookmarkIcon className="h-5 w-5" />}>
+                Personal
+              </DropDrawerItem>
+            </DropDrawerSubContent>
+          </DropDrawerSub>
+          <DropDrawerItem icon={<BookmarkIcon className="h-5 w-5" />}>
+            Save
+          </DropDrawerItem>
+          <DropDrawerItem icon={<EyeOffIcon className="h-5 w-5" />}>
+            Not interested
+          </DropDrawerItem>
+        </DropDrawerGroup>
+
+        <DropDrawerSeparator />
+
+        {/* Second group */}
+        <DropDrawerGroup>
+          <DropDrawerItem icon={<UserMinusIcon className="h-5 w-5" />}>
+            Mute
+          </DropDrawerItem>
+          <DropDrawerItem icon={<Copy className="h-5 w-5" />}>
+            Copy link
+          </DropDrawerItem>
+        </DropDrawerGroup>
+      </DropDrawerContent>
+    </DropDrawer>
+  );
+}
+```
+
 ## API Reference
 
 ### Component Overview
@@ -395,6 +499,7 @@ export function NestedExample() {
 | `DropDrawerSubContent` | Container for submenu content         |
 | `DropDrawerSeparator`  | Visual separator between items        |
 | `DropDrawerGroup`      | Groups related menu items             |
+| `DropDrawerFooter`     | Footer section for the drawer         |
 
 ### DropDrawer
 
@@ -428,15 +533,15 @@ The content of the dropdown/drawer.
 
 An item in the dropdown/drawer.
 
-| Prop       | Type                                      | Description                    |
-| ---------- | ----------------------------------------- | ------------------------------ |
-| `onSelect` | `(event: Event) => void`                  | Callback when item is selected |
-| `onClick`  | `React.MouseEventHandler<HTMLDivElement>` | Callback when item is clicked  |
-| `icon`     | `React.ReactNode`                         | Icon to display                |
-| `variant`  | `"default" \| "destructive"`              | Visual style variant           |
-| `inset`    | `boolean`                                 | Whether to add left padding    |
-| `disabled` | `boolean`                                 | Whether the item is disabled   |
-| `children` | `React.ReactNode`                         | The content of the item        |
+| Prop       | Type                                      | Description                              |
+| ---------- | ----------------------------------------- | ---------------------------------------- |
+| `onSelect` | `(event: Event) => void`                  | Callback when item is selected           |
+| `onClick`  | `React.MouseEventHandler<HTMLDivElement>` | Callback when item is clicked            |
+| `icon`     | `React.ReactNode`                         | Icon to display on the left side of item |
+| `variant`  | `"default" \| "destructive"`              | Visual style variant                     |
+| `inset`    | `boolean`                                 | Whether to add left padding              |
+| `disabled` | `boolean`                                 | Whether the item is disabled             |
+| `children` | `React.ReactNode`                         | The content of the item                  |
 
 ### DropDrawerSub
 
@@ -446,6 +551,15 @@ A container for submenu content. Submenu IDs are automatically generated, so you
 | ---------- | ----------------- | --------------------------------------------------------------------- |
 | `id`       | `string`          | Optional ID for the submenu (auto-generated if not provided)          |
 | `children` | `React.ReactNode` | The content of the submenu (should include SubTrigger and SubContent) |
+
+### DropDrawerFooter
+
+A footer section for the drawer. This component is only rendered in mobile mode (drawer) and is ignored in desktop mode (dropdown).
+
+| Prop        | Type              | Description               |
+| ----------- | ----------------- | ------------------------- |
+| `className` | `string`          | Additional CSS classes    |
+| `children`  | `React.ReactNode` | The content of the footer |
 
 ## Credits
 
