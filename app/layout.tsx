@@ -37,14 +37,14 @@ export const metadata: Metadata = {
   ],
   creator: "Jay",
   publisher: "Jay",
-  metadataBase: new URL("https://dropdrawer.jiawei.dev"),
+  metadataBase: new URL("https://dropdrawer.jiaweing.com"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://dropdrawer.jiawei.dev",
+    url: "https://dropdrawer.jiaweing.com",
     title: "DropDrawer - A responsive dropdown/drawer component for shadcn/ui",
     description:
       "A responsive component that automatically switches between a dropdown menu on desktop and a drawer on mobile devices for shadcn/ui",

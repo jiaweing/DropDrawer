@@ -61,10 +61,10 @@ export default function DropDrawerPage() {
                 </p>
                 <Code
                   code={{
-                    pnpm: "pnpm dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json",
-                    npm: "npx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json",
-                    yarn: "yarn dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json",
-                    bun: "bunx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json",
+                    pnpm: "pnpm dlx shadcn@latest add https://dropdrawer.jiaweing.com/r/dropdrawer.json",
+                    npm: "npx shadcn@latest add https://dropdrawer.jiaweing.com/r/dropdrawer.json",
+                    yarn: "yarn dlx shadcn@latest add https://dropdrawer.jiaweing.com/r/dropdrawer.json",
+                    bun: "bunx shadcn@latest add https://dropdrawer.jiaweing.com/r/dropdrawer.json",
                   }}
                 />
               </div>

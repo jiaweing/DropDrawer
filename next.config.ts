@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   compress: true, // Enable gzip compression
   reactStrictMode: true,
   images: {
-    domains: ["dropdrawer.jiawei.dev"],
+    domains: ["dropdrawer.jiaweing.com"],
     formats: ["image/avif", "image/webp"],
   },
   async headers() {

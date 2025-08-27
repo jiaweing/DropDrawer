@@ -7,7 +7,7 @@ A responsive component that automatically switches between a dropdown menu on de
 
 A drop-in replacement for shadcn/ui's DropdownMenu component.
 
-**Demo:** [https://dropdrawer.jiawei.dev](https://dropdrawer.jiawei.dev)
+**Demo:** [https://dropdrawer.jiaweing.com](https://dropdrawer.jiaweing.com)
 
 ## Why DropDrawer?
 
@@ -41,16 +41,16 @@ The easiest way to install DropDrawer is through the shadcn registry:
 
 ```bash
 # pnpm
-pnpm dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
+pnpm dlx shadcn@latest add https://dropdrawer.jiaweing.com/r/dropdrawer.json
 
 # npm
-npx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
+npx shadcn@latest add https://dropdrawer.jiaweing.com/r/dropdrawer.json
 
 # yarn
-yarn dlx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
+yarn dlx shadcn@latest add https://dropdrawer.jiaweing.com/r/dropdrawer.json
 
 # bun
-bunx shadcn@latest add https://dropdrawer.jiawei.dev/r/dropdrawer.json
+bunx shadcn@latest add https://dropdrawer.jiaweing.com/r/dropdrawer.json
 ```
 
 During local development, you can use:
