@@ -1,13 +1,15 @@
 # DropDrawer
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/jiaweing/dropdrawer)
-
 A responsive component that automatically switches between a dropdown menu on desktop and a drawer on mobile devices for shadcn/ui.
 
 A drop-in replacement for shadcn/ui's DropdownMenu component.
 
 **Demo:** [https://dropdrawer.jiaweing.com](https://dropdrawer.jiaweing.com)
+
+[![Stars](https://shieldcn.dev/github/stars/jiaweing/DropDrawer.svg)](https://github.com/jiaweing/DropDrawer)
+[![Forks](https://shieldcn.dev/github/forks/jiaweing/DropDrawer.svg)](https://github.com/jiaweing/DropDrawer)
+[![License](https://shieldcn.dev/github/license/jiaweing/DropDrawer.svg)](https://github.com/jiaweing/DropDrawer)
+[![Issues](https://shieldcn.dev/github/issues/jiaweing/DropDrawer.svg)](https://github.com/jiaweing/DropDrawer/issues)
 
 ## Why DropDrawer?
 
@@ -567,3 +569,13 @@ A footer section for the drawer. This component is only rendered in mobile mode 
 - [Vaul](https://github.com/emilkowalski/vaul) by [emilkowalski](https://github.com/emilkowalski)
 - [Radix UI](https://www.radix-ui.com/) by Workos
 - [Credenza](https://github.com/redpangilinan/credenza) by [redpangilinan](https://github.com/redpangilinan) for the inspiration
+
+## Star History
+
+<a href="https://www.star-history.com/#jiaweing/DropDrawer&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=jiaweing/DropDrawer&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=jiaweing/DropDrawer&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=jiaweing/DropDrawer&type=Date" />
+ </picture>
+</a>
