@@ -37,9 +37,33 @@ Traditional dropdown menus don't feel native on mobile devices - they can be dif
 
 ## Installation
 
-### Using shadcn registry (Recommended)
+### Using the GitHub registry (Recommended)
 
-The easiest way to install DropDrawer is through the shadcn registry:
+shadcn can install DropDrawer straight from this GitHub repository - no registry server or JSON URL required:
+
+```bash
+# pnpm
+pnpm dlx shadcn@latest add jiaweing/DropDrawer/dropdrawer
+
+# npm
+npx shadcn@latest add jiaweing/DropDrawer/dropdrawer
+
+# yarn
+yarn dlx shadcn@latest add jiaweing/DropDrawer/dropdrawer
+
+# bun
+bunx shadcn@latest add jiaweing/DropDrawer/dropdrawer
+```
+
+You can pin to a branch, tag, or commit SHA with `#ref`:
+
+```bash
+npx shadcn@latest add jiaweing/DropDrawer/dropdrawer#main
+```
+
+### Using the hosted registry URL
+
+You can also install from the hosted registry JSON:
 
 ```bash
 # pnpm
@@ -61,7 +85,7 @@ During local development, you can use:
 npx shadcn@latest add http://localhost:3000/r/dropdrawer.json
 ```
 
-This will automatically:
+Either method will automatically:
 
 - Install all required dependencies
 - Add the component to your project

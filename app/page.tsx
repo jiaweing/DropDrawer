@@ -53,11 +53,28 @@ export default function DropDrawerPage() {
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-medium mb-2">
-                  Using shadcn registry (Recommended)
+                  Using the GitHub registry (Recommended)
                 </h3>
                 <p className="text-sm text-muted-foreground mb-2">
-                  The easiest way to install DropDrawer is through the shadcn
-                  registry:
+                  shadcn can install DropDrawer straight from the GitHub
+                  repository, with no registry server or JSON URL required:
+                </p>
+                <Code
+                  code={{
+                    pnpm: "pnpm dlx shadcn@latest add jiaweing/DropDrawer/dropdrawer",
+                    npm: "npx shadcn@latest add jiaweing/DropDrawer/dropdrawer",
+                    yarn: "yarn dlx shadcn@latest add jiaweing/DropDrawer/dropdrawer",
+                    bun: "bunx shadcn@latest add jiaweing/DropDrawer/dropdrawer",
+                  }}
+                />
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium mb-2">
+                  Using the hosted registry URL
+                </h3>
+                <p className="text-sm text-muted-foreground mb-2">
+                  You can also install from the hosted registry JSON:
                 </p>
                 <Code
                   code={{
