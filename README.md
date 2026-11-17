@@ -117,7 +117,25 @@ If you copied the drawer component manually, make sure to install vaul:
 npm install vaul
 ```
 
-2. Copy the `useIsMobile` hook:
+The dropdown open and close animations come from the `animate-in` utilities in shadcn/ui's `dropdown-menu`. With Tailwind CSS v4 they need `tw-animate-css` (part of the default shadcn/ui setup):
+
+```bash
+npm install -D tw-animate-css
+```
+
+```css
+/* globals.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+```
+
+2. Install `motion`, which powers the drawer's submenu transitions:
+
+```bash
+npm install motion
+```
+
+3. Copy the `useIsMobile` hook:
 
 <details>
 <summary>Click to show code</summary>
@@ -126,29 +144,26 @@ npm install vaul
 import * as React from "react";
 
 const MOBILE_BREAKPOINT = 768;
+const MOBILE_QUERY = `(max-width: ${MOBILE_BREAKPOINT - 1}px)`;
+
+function subscribe(onChange: () => void) {
+  const mql = window.matchMedia(MOBILE_QUERY);
+  mql.addEventListener("change", onChange);
+  return () => mql.removeEventListener("change", onChange);
+}
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(
-    undefined
+  return React.useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(MOBILE_QUERY).matches,
+    () => false
   );
-
-  React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    };
-    mql.addEventListener("change", onChange);
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    return () => mql.removeEventListener("change", onChange);
-  }, []);
-
-  return !!isMobile;
 }
 ```
 
 </details>
 
-3. Copy the `dropdrawer` component:
+4. Copy the `dropdrawer` component:
 
 <details>
 <summary>Click to show code</summary>
@@ -156,15 +171,24 @@ export function useIsMobile() {
 ```tsx
 "use client";
 
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import {
+  animate,
+  AnimatePresence,
+  motion,
+  useIsPresent,
+  useMotionValue,
+  useReducedMotion,
+  type Transition,
+} from "motion/react";
 import * as React from "react";
+import { createPortal } from "react-dom";
 
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
   DrawerFooter,
-  DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
@@ -187,9 +211,9 @@ import { cn } from "@/lib/utils";
 
 </details>
 
-4. Update the import paths based on your project structure.
+5. Update the import paths based on your project structure.
 
-5. Customize the mobile breakpoint (optional):
+6. Customize the mobile breakpoint (optional):
 
 The default mobile breakpoint is 768px. You can customize this by modifying the `MOBILE_BREAKPOINT` constant in the `use-mobile.ts` hook.
 
@@ -422,6 +446,36 @@ export function NestedExample() {
 }
 ```
 
+On mobile, opening a submenu slides it in over the current level while the drawer height animates to fit, and the back button returns to the previous level. Submenus can be nested to any depth and can live inside `DropDrawerGroup`, fragments or your own components. The drawer header shows the trigger's text; pass `title` to `DropDrawerSub` to show something else:
+
+```tsx
+<DropDrawerSub title="Share post">
+  <DropDrawerSubTrigger>Share to</DropDrawerSubTrigger>
+  <DropDrawerSubContent>{/* ... */}</DropDrawerSubContent>
+</DropDrawerSub>
+```
+
+### Keeping the Menu Open
+
+As with `DropdownMenuItem`, call `event.preventDefault()` in `onSelect` to keep the menu (or drawer) open after an item is selected:
+
+```tsx
+<DropDrawerItem
+  onSelect={(event) => {
+    event.preventDefault();
+    toggleSaved();
+  }}
+>
+  Save
+</DropDrawerItem>
+```
+
+### Accessibility and Motion
+
+- Drawer items are `menuitem`s that can be reached with Tab and activated with Enter or Space. The arrow keys work as in the desktop menu: up and down move between items, right opens a submenu and left goes back. Focus moves into a submenu when it opens and back to its trigger when you go back.
+- Submenu transitions follow the user's reduced motion setting and turn into a short crossfade.
+- The drawer always reopens at the top level.
+
 ### Complex Example with Groups and Icons
 
 Here's a more complex example showing how to use groups, icons, and multiple nested submenus:
@@ -561,9 +615,9 @@ An item in the dropdown/drawer.
 
 | Prop       | Type                                      | Description                              |
 | ---------- | ----------------------------------------- | ---------------------------------------- |
-| `onSelect` | `(event: Event) => void`                  | Callback when item is selected           |
+| `onSelect` | `(event: Event) => void`                  | Callback when item is selected. Call `event.preventDefault()` to keep the menu open |
 | `onClick`  | `React.MouseEventHandler<HTMLDivElement>` | Callback when item is clicked            |
-| `icon`     | `React.ReactNode`                         | Icon to display on the left side of item |
+| `icon`     | `React.ReactNode`                         | Icon to display on the right side of the item |
 | `variant`  | `"default" \| "destructive"`              | Visual style variant                     |
 | `inset`    | `boolean`                                 | Whether to add left padding              |
 | `disabled` | `boolean`                                 | Whether the item is disabled             |
@@ -576,6 +630,7 @@ A container for submenu content.
 | Prop       | Type              | Description                                                           |
 | ---------- | ----------------- | --------------------------------------------------------------------- |
 | `id`       | `string`          | Optional ID for the submenu (auto-generated if not provided)          |
+| `title`    | `React.ReactNode` | Optional header title shown in the drawer when the submenu is open. Defaults to the text of `DropDrawerSubTrigger` |
 | `children` | `React.ReactNode` | The content of the submenu (should include SubTrigger and SubContent) |
 
 ### DropDrawerFooter

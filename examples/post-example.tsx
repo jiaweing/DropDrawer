@@ -2,17 +2,30 @@
 
 import {
   AlertTriangle,
+  AtSign,
+  BookmarkCheck,
   BookmarkIcon,
   Copy,
   EyeOffIcon,
+  Globe,
   Home,
   LayoutDashboard,
   LockIcon,
+  Mail,
+  MessageCircle,
+  MessageSquare,
   MoreVertical,
+  Printer,
+  QrCode,
+  Rss,
+  Send,
   Settings,
+  Share2,
   ShieldIcon,
+  Smartphone,
   UserMinusIcon,
   UserXIcon,
+  Users,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -31,8 +44,23 @@ import {
 
 import Image from "next/image";
 
+const shareTargets = [
+  { label: "Messages", icon: MessageCircle },
+  { label: "Mail", icon: Mail },
+  { label: "Direct message", icon: Send },
+  { label: "Group chat", icon: Users },
+  { label: "Comments", icon: MessageSquare },
+  { label: "Mention", icon: AtSign },
+  { label: "Nearby device", icon: Smartphone },
+  { label: "QR code", icon: QrCode },
+  { label: "Feed", icon: Rss },
+  { label: "Web", icon: Globe },
+  { label: "Print", icon: Printer },
+];
+
 export function PostExample() {
   const [open, setOpen] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -84,8 +112,21 @@ export function PostExample() {
                     </DropDrawerItem>
                   </DropDrawerSubContent>
                 </DropDrawerSub>
-                <DropDrawerItem icon={<BookmarkIcon className="h-5 w-5" />}>
-                  Save
+                <DropDrawerItem
+                  icon={
+                    saved ? (
+                      <BookmarkCheck className="h-5 w-5" />
+                    ) : (
+                      <BookmarkIcon className="h-5 w-5" />
+                    )
+                  }
+                  onSelect={(event) => {
+                    // preventDefault keeps the menu open, as with DropdownMenu.
+                    event.preventDefault();
+                    setSaved((value) => !value);
+                  }}
+                >
+                  {saved ? "Saved" : "Save"}
                 </DropDrawerItem>
                 <DropDrawerItem icon={<EyeOffIcon className="h-5 w-5" />}>
                   Not interested
@@ -153,11 +194,28 @@ export function PostExample() {
 
               <DropDrawerSeparator />
 
-              {/* Fourth group: Copy link */}
+              {/* Fourth group: Copy link and a long share list */}
               <DropDrawerGroup>
                 <DropDrawerItem icon={<Copy className="h-5 w-5" />}>
                   Copy link
                 </DropDrawerItem>
+                <DropDrawerSub title="Share post">
+                  <DropDrawerSubTrigger icon={<Share2 className="h-5 w-5" />}>
+                    Share to
+                  </DropDrawerSubTrigger>
+                  <DropDrawerSubContent>
+                    <DropDrawerGroup>
+                      {shareTargets.map(({ label, icon: Icon }) => (
+                        <DropDrawerItem
+                          key={label}
+                          icon={<Icon className="h-5 w-5" />}
+                        >
+                          {label}
+                        </DropDrawerItem>
+                      ))}
+                    </DropDrawerGroup>
+                  </DropDrawerSubContent>
+                </DropDrawerSub>
               </DropDrawerGroup>
             </DropDrawerContent>
           </DropDrawer>
